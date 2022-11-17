@@ -8,66 +8,70 @@ import React, { useState } from "react";
  * App -> BoxList -> NewBoxForm
  */
 export default function NewBoxForm({ setBoxes }) {
-  const [formData, setFormData] = useState({
-    height: "",
-    width: "",
-    backgroundColor: "",
-  });
-
-  function handleChange(evt) {
-    const fieldName = evt.target.name;
-    const value = evt.target.value;
-
-    setFormData((currData) => {
-      currData[fieldName] = value;
-      return { ...currData };
+    const [formData, setFormData] = useState({
+        height: "",
+        width: "",
+        backgroundColor: "",
     });
-  }
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    const id = Math.random();
-    const newBox = {
-      ...formData,
-      height: formData.height + "px",
-      width: formData.width + "px",
-      id,
-    };
-    setBoxes((prevBoxes) => [...prevBoxes, newBox]);
-    setFormData({
-      height: "",
-      width: "",
-      backgroundColor: "",
-    });
-  }
+    function handleChange(evt) {
+        const fieldName = evt.target.name;
+        const value = evt.target.value;
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="height-input">Height:</label>
-      <input
-        id="height-input"
-        name="height"
-        value={formData.height}
-        onChange={handleChange}
-      />
+        setFormData((currData) => {
+            currData[fieldName] = value;
+            return { ...currData };
+        });
+    }
 
-      <label htmlFor="width-input">Width:</label>
-      <input
-        id="width-input"
-        name="width"
-        value={formData.width}
-        onChange={handleChange}
-      />
+    function handleSubmit(evt) {
+        evt.preventDefault();
 
-      <label htmlFor="background-color-input">Background Color:</label>
-      <input
-        id="background-color-input"
-        name="backgroundColor"
-        value={formData.backgroundColor}
-        onChange={handleChange}
-      />
+        //TODO: move to component BoxList
+        const id = Math.random();
+        const newBox = {
+            ...formData,
+            height: formData.height + "px",
+            width: formData.width + "px",
+            id,
+        };
+        setBoxes((prevBoxes) => [...prevBoxes, newBox]);
+        //end TODO
+        
+        setFormData({
+            height: "",
+            width: "",
+            backgroundColor: "",
+        });
+    }
 
-      <button type="submit">Add a new box!</button>
-    </form>
-  );
+    return (
+        <form onSubmit={handleSubmit} style={{textAlign:"left"}}>
+            <label htmlFor="height-input">Height:</label>
+            <input
+                id="height-input"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+            />
+            <br></br>
+            <label htmlFor="width-input">Width:</label>
+            <input
+                id="width-input"
+                name="width"
+                value={formData.width}
+                onChange={handleChange}
+            />
+            <br></br>
+            <label htmlFor="background-color-input">Background Color:</label>
+            <input
+                id="background-color-input"
+                name="backgroundColor"
+                value={formData.backgroundColor}
+                onChange={handleChange}
+            />
+            <br></br>
+            <button type="submit">Add a new box!</button>
+        </form>
+    );
 }
