@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
-import NewBoxForm from './NewBoxForm';
-
+import React, { useState } from "react";
+import NewBoxForm from "./NewBoxForm";
+import Box from "./Box";
 /**
- * State: [ 
+ * State: [
  *           {
- *              height:height, 
- *              width:width, 
- *              backgroundColor:backgroundColor 
+ *              height:height,
+ *              width:width,
+ *              backgroundColor:backgroundColor,
+ *              id: number
  *           },
  *           ...
  *        ]
- *     
- * 
+ *
+ *
  * Props: None
- * 
+ *
  * App -> Boxlist -> Box
  *                -> NewBoxForm
  */
 
-function BoxList() {
-    const [boxes, setBoxes] = useState([])
+export default function BoxList() {
+  const [boxes, setBoxes] = useState([]);
 
+  function handleRemove(id) {
+    setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== id));
+  }
 
-
-    return(
-        <div>
-            <NewBoxForm getBoxData = {setBoxes}/>
-        </div>
-    )
-
+  return (
+    <div>
+      <NewBoxForm setBoxes={setBoxes} />
+      <div>
+        {boxes.map((box) => {
+          return (
+            <Box
+              box={{ ...box }}
+              key={box.id}
+              removeCb={() => handleRemove(box.id)}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
 }
